@@ -1,5 +1,5 @@
 faiss-cpu==1.14.3
-google-ai-generativelanguage==0.6.17
+google-ai-generativelanguage==0.6.18
 langchain==0.3.27
 langchain-community==0.3.27
 langchain-core==0.3.79
