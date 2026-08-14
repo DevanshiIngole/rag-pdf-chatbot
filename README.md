@@ -1,127 +1,208 @@
 # 🤖 RAG PDF Chatbot
 
-A **Retrieval-Augmented Generation (RAG) based conversational PDF chatbot** that allows users to upload PDF documents and ask questions about their content using Google's Gemini LLM.
+A **Retrieval-Augmented Generation (RAG) based conversational PDF chatbot** built with **Python, LangChain, FAISS, Google Gemini, and Streamlit**.
 
-The application uses **LangChain** for the RAG pipeline, **FAISS** for semantic vector search, and **Streamlit** for the interactive user interface.
+The application allows users to interact with PDF documents using natural language. It retrieves relevant information from the document using semantic similarity search and uses Google's Gemini LLM to generate context-aware answers.
 
 ## 🚀 Live Demo
 
-> Coming soon — the application will be deployed using Streamlit Community Cloud.
+**Try the deployed application:**
+
+https://devanshiingole-rag-pdf-chatbot-app-sh9whb.streamlit.app/
+
+> The application is deployed using Streamlit Community Cloud.
+
+## 📂 GitHub Repository
+
+https://github.com/DevanshiIngole/rag-pdf-chatbot
+
+---
 
 ## 📌 Project Overview
 
-Traditional Large Language Models can generate incorrect or hallucinated answers when they don't have access to the information contained in a user's private documents.
+Large Language Models can sometimes generate incorrect or hallucinated information when answering questions without access to relevant source documents.
 
-This project solves that problem using a **Retrieval-Augmented Generation (RAG)** architecture.
+This project uses **Retrieval-Augmented Generation (RAG)** to ground the LLM's responses in information retrieved from PDF documents.
 
-The application:
-
-1. Accepts PDF documents from the user.
-2. Extracts text from the documents.
-3. Splits the text into smaller chunks.
-4. Generates vector embeddings for the chunks.
-5. Stores the embeddings in a FAISS vector database.
-6. Retrieves the most relevant document chunks for a user's question.
-7. Sends the retrieved context to the Gemini LLM.
-8. Generates an answer based on the retrieved document context.
-9. Maintains conversation history for multi-turn interactions.
-
-## 🏗️ Architecture
+The application follows this workflow:
 
 ```text
-                    ┌──────────────────┐
-                    │    PDF Upload    │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │  Text Extraction │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Text Chunking    │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │    Embeddings    │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ FAISS Vector DB  │
-                    └────────┬─────────┘
-                             │
-                    User Question
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Semantic Search  │
-                    │    Retriever     │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Retrieved Context│
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │  Gemini LLM      │
-                    └────────┬─────────┘
-                             │
-                             ▼
-                    ┌──────────────────┐
-                    │ Generated Answer │
-                    └──────────────────┘
+PDF Document
+     │
+     ▼
+Text Extraction
+     │
+     ▼
+Text Chunking
+     │
+     ▼
+Document Embeddings
+     │
+     ▼
+FAISS Vector Store
+     │
+     ▼
+Semantic Retrieval
+     │
+     ▼
+Relevant Context
+     │
+     ▼
+Google Gemini LLM
+     │
+     ▼
+Context-Aware Answer
 ```
 
-## 🛠️ Tech Stack
-
-| Technology               | Purpose                            |
-| ------------------------ | ---------------------------------- |
-| Python                   | Core programming language          |
-| LangChain                | RAG pipeline and LLM orchestration |
-| Gemini API               | Large Language Model               |
-| FAISS                    | Vector database / semantic search  |
-| Streamlit                | Web interface                      |
-| PyPDF                    | PDF text extraction                |
-| HuggingFace / Embeddings | Document embeddings                |
+---
 
 ## ✨ Features
 
-* 📄 Upload and process PDF documents
-* 🔎 Semantic document search
+* 📄 PDF document processing
+* 🔎 Semantic similarity search
 * 🧠 Retrieval-Augmented Generation
-* 🤖 Gemini-powered question answering
-* 💬 Multi-turn conversational interaction
+* 🤖 Google Gemini LLM integration
 * 🗂️ FAISS vector database
-* 📚 Context-aware answers
+* 💬 Conversational question answering
+* 📚 Context-aware responses
 * ⚡ Interactive Streamlit interface
 * 🔐 API key entered securely through the application
-* 🚫 Reduces hallucinations by grounding answers in retrieved document context
+* 🚫 Reduces unsupported/hallucinated responses by grounding answers in retrieved document context
 
-## 📂 Project Structure
+---
+
+## 🛠️ Tech Stack
+
+| Technology        | Purpose                            |
+| ----------------- | ---------------------------------- |
+| **Python**        | Core programming language          |
+| **LangChain**     | RAG pipeline and LLM orchestration |
+| **Google Gemini** | Large Language Model               |
+| **FAISS**         | Vector similarity search           |
+| **Streamlit**     | Web application interface          |
+| **PyPDF2**        | PDF text extraction                |
+| **Pandas**        | Data processing                    |
+| **python-dotenv** | Environment variable management    |
+
+---
+
+## 🏗️ System Architecture
+
+```text
+                    ┌─────────────────────┐
+                    │     PDF Upload      │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   PDF Text Parser   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │    Text Chunking    │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │      Embeddings     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   FAISS Vector DB   │
+                    └──────────┬──────────┘
+                               │
+                               │
+                    ┌──────────▼──────────┐
+                    │   User Question     │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Semantic Retrieval  │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │ Retrieved Context   │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Gemini LLM        │
+                    └──────────┬──────────┘
+                               │
+                               ▼
+                    ┌─────────────────────┐
+                    │   Final Answer      │
+                    └─────────────────────┘
+```
+
+---
+
+## 🔄 How RAG Works in This Project
+
+### 1. Document ingestion
+
+The application reads the uploaded PDF and extracts its text.
+
+### 2. Text splitting
+
+Large documents are divided into smaller chunks so that relevant sections can be retrieved efficiently.
+
+### 3. Embeddings
+
+The text chunks are converted into numerical vector representations.
+
+### 4. FAISS indexing
+
+The embeddings are stored in a FAISS vector index for efficient similarity search.
+
+### 5. Retrieval
+
+When a user asks a question, the application searches the FAISS index and retrieves the most relevant document chunks.
+
+### 6. Generation
+
+The retrieved information is passed as context to Google's Gemini LLM.
+
+### 7. Response
+
+Gemini generates an answer based on the retrieved document context.
+
+---
+
+## 📁 Project Structure
 
 ```text
 rag-pdf-chatbot/
 │
-├── app.py                  # Main Streamlit application
+├── app.py
+│   └── Main Streamlit application
 │
 ├── faiss_index/
-│   ├── index.faiss        # FAISS vector index
-│   └── index.pkl          # Stored document metadata
+│   ├── index.faiss
+│   └── index.pkl
 │
-├── requirements.txt        # Python dependencies
-├── README.md               # Project documentation
-├── .gitignore              # Ignored files and secrets
+├── requirements.txt
+│   └── Python dependencies
 │
-└── myenv/                  # Local virtual environment
-                            # Not uploaded to GitHub
+├── runtime.txt
+│   └── Deployment/runtime configuration
+│
+├── README.md
+│   └── Project documentation
+│
+└── .gitignore
+    └── Files excluded from Git
 ```
 
-## ⚙️ Installation
+> `myenv/` is used only for the local Python environment and is intentionally excluded from GitHub.
+
+---
+
+## ⚙️ Installation & Setup
 
 ### 1. Clone the repository
 
@@ -137,15 +218,13 @@ cd rag-pdf-chatbot
 
 ### 3. Create a virtual environment
 
-Windows:
-
 ```bash
 python -m venv myenv
 ```
 
-### 4. Activate the virtual environment
+### 4. Activate the environment
 
-Windows PowerShell:
+#### Windows PowerShell
 
 ```powershell
 .\myenv\Scripts\Activate.ps1
@@ -157,106 +236,230 @@ Windows PowerShell:
 pip install -r requirements.txt
 ```
 
+---
+
 ## 🔑 Gemini API Key
 
-This project requires a **Google Gemini API key**.
+This application requires a **Google Gemini API key**.
 
-When you run the application, enter your API key through the Streamlit interface.
+The application provides an input field through the Streamlit interface where the user can provide their API key.
 
-**Never commit your API key to GitHub.**
+### Security
 
-## ▶️ Run the Application
+**Never commit an API key to GitHub.**
 
-Start Streamlit using:
+Do not put API keys directly inside:
+
+```text
+app.py
+```
+
+or commit files such as:
+
+```text
+.env
+.streamlit/secrets.toml
+```
+
+These files are excluded through `.gitignore`.
+
+---
+
+## ▶️ Run Locally
+
+After activating the virtual environment and installing dependencies:
 
 ```bash
 python -m streamlit run app.py
 ```
 
-The application will be available locally at:
+The application will normally be available at:
 
 ```text
 http://localhost:8501
 ```
 
-## 💡 Example Use Cases
+---
 
-This chatbot can be used for:
+## 🌐 Deployment
 
-* 📖 Research papers
-* 📑 Academic notes
-* 📚 Books and study material
-* 🏢 Company documentation
-* 📋 Technical documentation
-* 📄 Project reports
-* 📊 Business documents
+The application is deployed using **Streamlit Community Cloud**.
 
-## 🔄 RAG Pipeline
-
-The application follows this pipeline:
+Deployment workflow:
 
 ```text
-PDF
- ↓
-Text Extraction
- ↓
-Text Splitting
- ↓
-Embedding Generation
- ↓
-FAISS Vector Store
- ↓
-Similarity Search
- ↓
-Relevant Context
- ↓
-Gemini LLM
- ↓
-Grounded Answer
+Local Project
+      │
+      ▼
+    Git
+      │
+      ▼
+   GitHub
+      │
+      ▼
+Streamlit Community Cloud
+      │
+      ▼
+ Public Web Application
 ```
 
-## 🧠 Why RAG?
+### Current Deployment
 
-A standard LLM may not know the contents of a private PDF.
+**Live application:**
 
-With RAG, the application first retrieves relevant information from the uploaded document and then provides that information to the LLM as context.
+https://devanshiingole-rag-pdf-chatbot-app-sh9whb.streamlit.app/
 
-This helps produce answers that are:
+---
+
+## 🧪 Example Questions
+
+After uploading a suitable PDF, users can ask questions such as:
+
+```text
+What is the main topic of this document?
+
+Summarize the key findings.
+
+What are the important conclusions?
+
+Explain the methodology used in the document.
+
+What are the main advantages discussed?
+
+What are the limitations mentioned?
+```
+
+The chatbot retrieves relevant content from the document before generating the answer.
+
+---
+
+## 🎯 Why RAG?
+
+A traditional LLM may not have access to the contents of a user's private document.
+
+RAG improves this process by retrieving relevant information from the document and providing it to the LLM as context.
+
+This helps make responses:
 
 * More relevant
-* More context-aware
-* Better grounded in the source documents
-* Less prone to hallucination
+* More document-specific
+* Better grounded in retrieved information
+* Less dependent on the LLM's pre-trained knowledge
+* Less prone to unsupported answers
+
+---
 
 ## 📊 Evaluation
 
-The project can be evaluated using **RAGAS** metrics such as:
+The planned evaluation methodology uses **RAGAS** metrics to evaluate the quality of the RAG pipeline.
 
-* **Faithfulness** — measures whether the generated answer is supported by the retrieved context.
-* **Answer Relevancy** — measures how relevant the generated answer is to the user's question.
+Important metrics include:
 
-Future improvements include adding automated RAGAS evaluation and comparing the RAG system against a base LLM without document retrieval.
+### Faithfulness
 
-## 🔮 Future Improvements
+Measures whether the generated answer is supported by the retrieved context.
 
-* [ ] Add RAGAS evaluation dashboard
-* [ ] Add answer citations with page numbers
-* [ ] Support multiple document formats
-* [ ] Add persistent vector databases
-* [ ] Add user authentication
+### Answer Relevancy
+
+Measures how relevant the generated answer is to the user's question.
+
+A future version of this project can compare:
+
+```text
+Base LLM
+   vs.
+RAG + LLM
+```
+
+to measure the improvement in grounded responses.
+
+---
+
+## 🚀 Future Improvements
+
+* [ ] Add RAGAS evaluation pipeline
+* [ ] Add faithfulness and answer-relevancy scores
+* [ ] Compare RAG against a base LLM
+* [ ] Add source/page citations to answers
+* [ ] Add support for TXT, DOCX and other document formats
+* [ ] Add persistent vector database management
 * [ ] Improve conversational memory
-* [ ] Deploy using Streamlit Community Cloud
 * [ ] Add FastAPI backend
-* [ ] Add automated evaluation pipeline
-* [ ] Add document-level source attribution
+* [ ] Separate frontend and backend architecture
+* [ ] Add user authentication
+* [ ] Add document management
+* [ ] Improve UI/UX
+* [ ] Add automated testing
+* [ ] Add CI/CD pipeline
+
+---
+
+## 📈 Future Architecture
+
+The planned production architecture is:
+
+```text
+                 ┌──────────────────┐
+                 │ Streamlit Frontend│
+                 └────────┬─────────┘
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │  FastAPI Backend │
+                 └────────┬─────────┘
+                          │
+              ┌───────────┴───────────┐
+              │                       │
+              ▼                       ▼
+       ┌──────────────┐       ┌──────────────┐
+       │ FAISS Vector │       │ Gemini / LLM  │
+       │    Store     │       │              │
+       └──────────────┘       └──────────────┘
+              │                       │
+              └───────────┬───────────┘
+                          ▼
+                  ┌───────────────┐
+                  │ RAG Response  │
+                  └───────────────┘
+```
+
+---
+
+## 💼 Skills Demonstrated
+
+This project demonstrates practical experience with:
+
+* Python
+* LangChain
+* Retrieval-Augmented Generation (RAG)
+* Large Language Models
+* Google Gemini API
+* Vector embeddings
+* FAISS
+* Semantic search
+* Prompt engineering
+* PDF processing
+* Streamlit
+* Git & GitHub
+* Cloud deployment
+
+---
 
 ## 👩‍💻 Author
 
-**Devanshi Ingole**
+### Devanshi Ingole
 
 GitHub:
 https://github.com/DevanshiIngole
 
 ---
 
-⭐ If you find this project useful, consider giving the repository a star!
+## ⭐ Support
+
+If you find this project useful, consider giving the repository a ⭐ on GitHub.
+
+**GitHub Repository:**
+https://github.com/DevanshiIngole/rag-pdf-chatbot
+
+**Live Demo:**
+https://devanshiingole-rag-pdf-chatbot-app-sh9whb.streamlit.app/
